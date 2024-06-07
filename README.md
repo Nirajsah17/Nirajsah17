@@ -11,7 +11,7 @@
 
 - 📄 Know about my experiences [https://drive.google.com/file/d/1TXCvb2f2a866PlJdZtk6YgU5kLApTlyX/view?usp=drive_link](https://drive.google.com/file/d/1TXCvb2f2a866PlJdZtk6YgU5kLApTlyX/view?usp=drive_link)
 
-- ⚡ Fun fact **I think from heart**
+- ⚡ **When Nothing Goes Right turn Left**
 
 <h3 align="left">Connect with me:</h3>
 <p align="left">
