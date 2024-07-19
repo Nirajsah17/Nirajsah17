@@ -9,7 +9,7 @@
 
 - 📫 How to reach me **nirajnsp5@gmail.com**
 
-- 📄 Know about my experiences [Niraj Kumar Sah Resume](https://docs.google.com/document/d/1Wo0QsVrDDLfTp6uBA9kERly2V4Eo6jMwi-T5kdZEt_k/edit?usp=sharing)
+- 📄 Know about my experiences [Niraj Kumar Sah Resume](https://drive.google.com/file/d/1pDSjP9So77VWD0-lD0XEa4z_sow1yI8Z/view?usp=sharing)
 
 - ⚡ **When Nothing Goes Right turn Left**
 
