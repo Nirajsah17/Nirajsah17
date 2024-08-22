@@ -1,20 +1,37 @@
-name: Jekyll site CI
+name: Jekyll Build and Deploy
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main  # Change this to your default branch if it's different
   pull_request:
-    branches: [ "main" ]
+    branches:
+      - main  # Optionally run on pull requests to the main branch
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Build the site in the jekyll/builder container
-      run: |
-        docker run \
-        -v ${{ github.workspace }}:/srv/jekyll -v ${{ github.workspace }}/_site:/srv/jekyll/_site \
-        jekyll/builder:latest /bin/bash -c "chmod -R 777 /srv/jekyll && jekyll build --future"
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1' # Specify the Ruby version needed for Jekyll
+
+      - name: Install Jekyll and Bundler
+        run: gem install jekyll bundler
+
+      - name: Install dependencies
+        run: bundle install
+
+      - name: Build the site with Jekyll
+        run: bundle exec jekyll build
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_site  # The folder where Jekyll outputs the static files
