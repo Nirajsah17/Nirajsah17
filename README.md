@@ -11,7 +11,7 @@
 
 - 📄 Know about my experiences [Niraj Kumar Sah profile](https://nirajsah17.github.io/Nirajsah17/)
 
-- ⚡ **When Nothing Goes Right turn Left**
+- ⚡ **ʇɟǝl uɹnʇ 'ʇɥƃᴉɹ sǝoƃ ƃuᴉɥʇou uǝɥʍ**
 
 <h3 align="left">Connect with me:</h3>
 <p align="left">
