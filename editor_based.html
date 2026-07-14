@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Niraj Kumar Sah — Frontend Engineer</title>
+<meta name="description" content="Niraj Kumar Sah — Frontend Engineer, 5 years building React, Angular and Web Component architectures.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#EDEFEA;
+    --paper-alt:#E3E6DD;
+    --panel:#FFFFFF;
+    --ink:#14171C;
+    --ink-soft:#565D66;
+    --line:#D7DBD0;
+    --accent:#2E5EFF;
+    --accent-soft:#E6ECFF;
+    --accent2:#1F8A5F;
+    --tag-tsx:#2E5EFF;
+    --tag-json:#B9791A;
+    --tag-md:#7A5FD1;
+    --sidebar-w:280px;
+    --radius:3px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}
+  }
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    line-height:1.55;
+  }
+  .mono{font-family:'JetBrains Mono',monospace;}
+
+  a{color:inherit;}
+
+  /* ---------- Layout shell ---------- */
+  .shell{
+    display:flex;
+    min-height:100vh;
+    max-width:1280px;
+    margin:0 auto;
+  }
+
+  /* ---------- Sidebar (module tree) ---------- */
+  .sidebar{
+    width:var(--sidebar-w);
+    flex-shrink:0;
+    position:sticky;
+    top:0;
+    align-self:flex-start;
+    height:100vh;
+    padding:36px 20px 24px 28px;
+    border-right:1px solid var(--line);
+    display:flex;
+    flex-direction:column;
+  }
+  .brand{
+    font-family:'JetBrains Mono',monospace;
+    font-weight:700;
+    font-size:15px;
+    letter-spacing:-0.01em;
+    margin-bottom:2px;
+  }
+  .brand .dim{color:var(--ink-soft); font-weight:500;}
+  .brand-sub{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    color:var(--ink-soft);
+    margin-bottom:28px;
+  }
+  .tree{list-style:none; margin:0; padding:0; font-family:'JetBrains Mono',monospace; font-size:13px;}
+  .tree li{position:relative;}
+  .tree a{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:7px 8px 7px 26px;
+    color:var(--ink-soft);
+    text-decoration:none;
+    border-left:2px solid transparent;
+    border-radius:0 var(--radius) var(--radius) 0;
+    white-space:nowrap;
+  }
+  .tree .branch{
+    position:absolute;
+    left:2px;
+    top:0;
+    color:var(--line);
+    font-size:13px;
+    line-height:34px;
+    user-select:none;
+  }
+  .tree a:hover{background:var(--paper-alt); color:var(--ink);}
+  .tree a.active{
+    color:var(--ink);
+    border-left:2px solid var(--accent);
+    background:var(--accent-soft);
+    font-weight:600;
+  }
+  .ext{
+    font-size:9px;
+    font-weight:700;
+    padding:1px 5px;
+    border-radius:2px;
+    color:#fff;
+    margin-left:auto;
+    letter-spacing:0.02em;
+  }
+  .ext.tsx{background:var(--tag-tsx);}
+  .ext.json{background:var(--tag-json);}
+  .ext.md{background:var(--tag-md);}
+
+  .sidebar-foot{
+    margin-top:auto;
+    padding-top:20px;
+    border-top:1px solid var(--line);
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    color:var(--ink-soft);
+  }
+  .status-row{display:flex; align-items:center; gap:7px; margin-bottom:6px;}
+  .dot{width:6px; height:6px; border-radius:50%; background:var(--accent2); flex-shrink:0;}
+  .dot.pulse{animation:pulse 2s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{opacity:1;} 50%{opacity:.35;}}
+
+  /* ---------- Main column ---------- */
+  main{flex:1; min-width:0;}
+
+  .pane{
+    border-bottom:1px solid var(--line);
+  }
+  .tab-bar{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:12px 40px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    color:var(--ink-soft);
+    background:var(--paper-alt);
+    border-bottom:1px solid var(--line);
+    position:sticky;
+    top:0;
+    z-index:5;
+  }
+  .tab-bar .filedot{width:6px; height:6px; border-radius:50%; background:var(--accent);}
+  .pane-body{padding:52px 40px 64px;}
+  @media (max-width:640px){
+    .pane-body{padding:36px 20px 44px;}
+    .tab-bar{padding:10px 20px;}
+  }
+
+  /* ---------- Hero ---------- */
+  .hero .pane-body{padding-top:64px;}
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    color:var(--accent);
+    font-weight:600;
+    letter-spacing:0.03em;
+    margin:0 0 14px;
+  }
+  h1{
+    font-family:'JetBrains Mono',monospace;
+    font-size:clamp(34px,5vw,54px);
+    line-height:1.05;
+    letter-spacing:-0.02em;
+    margin:0 0 14px;
+    font-weight:700;
+  }
+  .role-line{
+    font-size:19px;
+    color:var(--ink-soft);
+    max-width:640px;
+    margin:0 0 28px;
+  }
+  .role-line b{color:var(--ink); font-weight:600;}
+  .contact-row{display:flex; flex-wrap:wrap; gap:10px; margin-bottom:44px;}
+  .contact-row a, .contact-row span{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12.5px;
+    padding:8px 14px;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    text-decoration:none;
+    background:var(--panel);
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+  }
+  .contact-row a:hover{border-color:var(--accent); color:var(--accent);}
+  .stat-strip{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    overflow:hidden;
+    max-width:560px;
+    background:var(--panel);
+  }
+  .stat{padding:18px 20px; border-right:1px solid var(--line);}
+  .stat:last-child{border-right:none;}
+  .stat b{
+    display:block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:24px;
+    color:var(--accent);
+  }
+  .stat span{font-size:11.5px; color:var(--ink-soft); text-transform:uppercase; letter-spacing:0.04em;}
+
+  /* ---------- Section heading ---------- */
+  .sec-head{display:flex; align-items:baseline; gap:12px; margin-bottom:34px;}
+  .sec-num{font-family:'JetBrains Mono',monospace; color:var(--line); font-size:14px;}
+  h2{font-size:26px; margin:0; letter-spacing:-0.01em;}
+
+  /* ---------- Experience ---------- */
+  .job{
+    display:grid;
+    grid-template-columns:190px 1fr;
+    gap:24px;
+    padding:26px 0;
+    border-top:1px solid var(--line);
+  }
+  .job:first-of-type{border-top:none;}
+  .job-meta{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--ink-soft);}
+  .job-meta .dates{display:block; margin-top:4px;}
+  .job-title{font-size:18px; font-weight:700; margin:0 0 2px;}
+  .job-co{color:var(--accent); font-weight:600; font-size:14.5px; margin-bottom:14px;}
+  .job ul{margin:0; padding-left:18px;}
+  .job li{margin-bottom:9px; color:var(--ink-soft); font-size:14.5px;}
+  .job li b{color:var(--ink); font-weight:600;}
+  @media (max-width:720px){
+    .job{grid-template-columns:1fr; gap:8px;}
+  }
+
+  /* ---------- Skills ---------- */
+  .skill-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    overflow:hidden;
+  }
+  .skill-cell{background:var(--panel); padding:20px 22px;}
+  .skill-cell h3{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11.5px;
+    text-transform:uppercase;
+    letter-spacing:0.05em;
+    color:var(--accent2);
+    margin:0 0 12px;
+  }
+  .chip-row{display:flex; flex-wrap:wrap; gap:6px;}
+  .chip{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    padding:5px 9px;
+    border-radius:2px;
+    background:var(--paper-alt);
+    color:var(--ink);
+    border:1px solid var(--line);
+  }
+
+  /* ---------- Projects ---------- */
+  .proj-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:18px;}
+  .proj-card{
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    background:var(--panel);
+    padding:22px;
+    display:flex;
+    flex-direction:column;
+    transition:border-color .15s ease, transform .15s ease;
+  }
+  .proj-card:hover{border-color:var(--accent); transform:translateY(-2px);}
+  .proj-top{display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;}
+  .proj-name{font-weight:700; font-size:16px;}
+  .proj-desc{color:var(--ink-soft); font-size:14px; margin:0 0 18px; flex-grow:1;}
+  .proj-links{display:flex; gap:14px; font-family:'JetBrains Mono',monospace; font-size:12px;}
+  .proj-links a{text-decoration:none; color:var(--accent); border-bottom:1px solid transparent;}
+  .proj-links a:hover{border-bottom-color:var(--accent);}
+
+  /* ---------- Education / Contact ---------- */
+  .edu-row{display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; align-items:baseline;}
+  .edu-degree{font-size:17px; font-weight:700; margin:0 0 4px;}
+  .edu-org{color:var(--ink-soft); font-size:14px;}
+  .edu-meta{font-family:'JetBrains Mono',monospace; font-size:12.5px; color:var(--ink-soft); text-align:right;}
+
+  footer.pane .pane-body{
+    text-align:center;
+    padding-top:56px;
+    padding-bottom:56px;
+  }
+  footer h2{font-size:28px; margin-bottom:12px;}
+  footer p{color:var(--ink-soft); max-width:440px; margin:0 auto 28px;}
+  .cta-btn{
+    font-family:'JetBrains Mono',monospace;
+    display:inline-block;
+    padding:14px 30px;
+    background:var(--ink);
+    color:var(--paper);
+    text-decoration:none;
+    border-radius:var(--radius);
+    font-weight:600;
+    font-size:14px;
+  }
+  .cta-btn:hover{background:var(--accent);}
+
+  /* ---------- Mobile nav ---------- */
+  .mobile-bar{display:none;}
+  @media (max-width:880px){
+    .sidebar{display:none;}
+    .mobile-bar{
+      display:flex;
+      overflow-x:auto;
+      gap:4px;
+      padding:14px 16px;
+      position:sticky;
+      top:0;
+      background:var(--paper);
+      border-bottom:1px solid var(--line);
+      z-index:10;
+      font-family:'JetBrains Mono',monospace;
+      font-size:12px;
+    }
+    .mobile-bar a{
+      white-space:nowrap;
+      padding:7px 12px;
+      border:1px solid var(--line);
+      border-radius:14px;
+      text-decoration:none;
+      color:var(--ink-soft);
+    }
+    .mobile-bar a.active{color:var(--ink); border-color:var(--accent); background:var(--accent-soft);}
+    .shell{flex-direction:column;}
+  }
+  a:focus-visible, button:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
+</style>
+</head>
+<body>
+
+<div class="mobile-bar" id="mobileNav">
+  <a href="#profile" data-key="profile">profile</a>
+  <a href="#experience" data-key="experience">experience</a>
+  <a href="#skills" data-key="skills">skills</a>
+  <a href="#projects" data-key="projects">projects</a>
+  <a href="#education" data-key="education">education</a>
+  <a href="#contact" data-key="contact">contact</a>
+</div>
+
+<div class="shell">
+
+  <aside class="sidebar">
+    <div class="brand">niraj-kumar-sah<span class="dim">.dev</span></div>
+    <div class="brand-sub">// frontend engineer</div>
+
+    <ul class="tree" id="navTree">
+      <li><span class="branch">├─</span><a href="#profile" data-key="profile" class="active">profile <span class="ext md">md</span></a></li>
+      <li><span class="branch">├─</span><a href="#experience" data-key="experience">experience <span class="ext tsx">tsx</span></a></li>
+      <li><span class="branch">├─</span><a href="#skills" data-key="skills">skills <span class="ext json">json</span></a></li>
+      <li><span class="branch">├─</span><a href="#projects" data-key="projects">projects <span class="ext tsx">tsx</span></a></li>
+      <li><span class="branch">├─</span><a href="#education" data-key="education">education <span class="ext md">md</span></a></li>
+      <li><span class="branch">└─</span><a href="#contact" data-key="contact">contact <span class="ext json">json</span></a></li>
+    </ul>
+
+    <div class="sidebar-foot">
+      <div class="status-row"><span class="dot pulse"></span> open to opportunities</div>
+      <div>Delhi NCR, India</div>
+      <div>+91&nbsp;98702&nbsp;65205</div>
+    </div>
+  </aside>
+
+  <main>
+
+    <section class="pane hero" id="profile">
+      <div class="pane-body">
+        <p class="eyebrow">// profile.md</p>
+        <h1>Niraj Kumar Sah</h1>
+        <p class="role-line">Frontend Engineer building <b>React</b>, <b>Angular</b> and <b>Web Component</b> architectures for data-intensive products — currently shipping the <b>BigFix Inventory &amp; Vulnerability Remediation</b> platform at HCL Software.</p>
+
+        <div class="contact-row">
+          <a href="mailto:nirajnsp5@gmail.com">✉ nirajnsp5@gmail.com</a>
+          <a href="https://www.linkedin.com/in/niraj-nearest" target="_blank" rel="noopener">in/niraj-nearest</a>
+          <a href="https://github.com/nirajsah17" target="_blank" rel="noopener">github.com/nirajsah17</a>
+          <span>Delhi NCR, India</span>
+        </div>
+
+        <div class="stat-strip">
+          <div class="stat"><b>5</b><span>Years experience</span></div>
+          <div class="stat"><b>2</b><span>Companies</span></div>
+          <div class="stat"><b>40%</b><span>Faster page loads shipped</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pane" id="experience">
+      <div class="tab-bar"><span class="filedot"></span> experience.tsx</div>
+      <div class="pane-body">
+        <div class="sec-head"><span class="sec-num">01</span><h2>Experience</h2></div>
+
+        <div class="job">
+          <div class="job-meta">
+            <span class="dates">Jun 2025 — Present</span>
+          </div>
+          <div>
+            <p class="job-title">Senior Software Engineer</p>
+            <p class="job-co">HCL Software</p>
+            <ul>
+              <li>Building and maintaining the <b>BigFix Inventory and Vulnerability Remediation (IVR)</b> platform across On-Premises and SaaS deployments for enterprise endpoint security customers.</li>
+              <li>Architecting modular UIs with <b>React.js, Zustand</b> and a <b>Microfrontend</b> setup, letting teams develop, deploy and scale application modules independently.</li>
+              <li>Designing vulnerability dashboards, remediation workflows and policy-management features focused on usability and operational efficiency.</li>
+              <li>Handling real-time data updates and async workflows for live vulnerability status feeds, tuned for rendering large security datasets.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="job">
+          <div class="job-meta">
+            <span class="dates">Sep 2021 — May 2025</span>
+          </div>
+          <div>
+            <p class="job-title">Software Engineer</p>
+            <p class="job-co">MapMyIndia (CE Info Systems Ltd.)</p>
+            <ul>
+              <li>Led development of responsive apps in <b>React.js, Angular and TypeScript</b>, lifting user engagement and satisfaction ratings by <b>30%</b>.</li>
+              <li>Built and integrated an AI-assisted image/video annotation platform — bounding boxes, polygons, polylines and intelligent labeling workflows.</li>
+              <li>Shipped real-time collaboration and video streaming with <b>WebSocket API and WebRTC</b>, including streaming-response handling patterns used in LLM chat interfaces.</li>
+              <li>Rebuilt core SPAs with <b>React.js and Redux Toolkit</b>, cutting page load times by <b>40%</b> through rendering and performance work.</li>
+              <li>Implemented canvas-based annotation tooling with <b>Konva.js</b>, plus offline-first storage via <b>IndexedDB</b> for large-scale data workflows.</li>
+              <li>Migrated legacy AngularJS apps to modern <b>Web Components</b> (Custom Elements, Shadow DOM, ES Modules), improving maintainability and performance.</li>
+              <li>Built reusable component libraries for data-dense screens, and integrated LLM/ML APIs to power auto-labeling and AI-assisted annotation.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pane" id="skills">
+      <div class="tab-bar"><span class="filedot"></span> skills.json</div>
+      <div class="pane-body">
+        <div class="sec-head"><span class="sec-num">02</span><h2>Skills</h2></div>
+
+        <div class="skill-grid">
+          <div class="skill-cell">
+            <h3>Core Frontend</h3>
+            <div class="chip-row">
+              <span class="chip">React.js</span><span class="chip">Angular</span><span class="chip">TypeScript</span><span class="chip">JavaScript ES6+</span><span class="chip">HTML5</span><span class="chip">CSS3</span><span class="chip">TailwindCSS</span><span class="chip">Ant Design</span>
+            </div>
+          </div>
+          <div class="skill-cell">
+            <h3>Architecture</h3>
+            <div class="chip-row">
+              <span class="chip">Microfrontends</span><span class="chip">SPA</span><span class="chip">Web Components</span><span class="chip">Shadow DOM</span><span class="chip">Custom Elements</span><span class="chip">IndexedDB / Offline-first</span>
+            </div>
+          </div>
+          <div class="skill-cell">
+            <h3>State Management</h3>
+            <div class="chip-row">
+              <span class="chip">Redux Toolkit</span><span class="chip">Zustand</span><span class="chip">Context API</span>
+            </div>
+          </div>
+          <div class="skill-cell">
+            <h3>Real-Time &amp; Async</h3>
+            <div class="chip-row">
+              <span class="chip">WebSocket API</span><span class="chip">WebRTC</span><span class="chip">Streaming responses</span><span class="chip">AJAX</span>
+            </div>
+          </div>
+          <div class="skill-cell">
+            <h3>Build Tools</h3>
+            <div class="chip-row">
+              <span class="chip">Webpack</span><span class="chip">Vite</span><span class="chip">Node.js</span>
+            </div>
+          </div>
+          <div class="skill-cell">
+            <h3>DevOps &amp; Tools</h3>
+            <div class="chip-row">
+              <span class="chip">Docker</span><span class="chip">Docker Compose</span><span class="chip">Git</span><span class="chip">GitHub</span><span class="chip">GitLab</span><span class="chip">JIRA</span><span class="chip">Linux</span>
+            </div>
+          </div>
+          <div class="skill-cell">
+            <h3>APIs &amp; Data</h3>
+            <div class="chip-row">
+              <span class="chip">REST APIs</span><span class="chip">GraphQL</span>
+            </div>
+          </div>
+          <div class="skill-cell">
+            <h3>AI / GenAI Integration</h3>
+            <div class="chip-row">
+              <span class="chip">OpenAI &amp; Claude APIs</span><span class="chip">LLM streaming UIs</span><span class="chip">Prompt engineering</span><span class="chip">RAG concepts</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pane" id="projects">
+      <div class="tab-bar"><span class="filedot"></span> projects.tsx</div>
+      <div class="pane-body">
+        <div class="sec-head"><span class="sec-num">03</span><h2>Projects</h2></div>
+
+        <div class="proj-grid">
+          <div class="proj-card">
+            <div class="proj-top"><span class="proj-name">Edito</span><span class="ext tsx">tsx</span></div>
+            <p class="proj-desc">In-browser code editor with local persistence via IndexedDB — a hand-built editor shell covering syntax handling, storage and layout.</p>
+            <div class="proj-links">
+              <a href="https://np-helix-editor.netlify.app/" target="_blank" rel="noopener">Live demo →</a>
+            </div>
+          </div>
+
+          <div class="proj-card">
+            <div class="proj-top"><span class="proj-name">observer-hooks</span><span class="ext json">npm</span></div>
+            <p class="proj-desc">Lightweight, React-hooks-inspired observable module for watching object property changes and subscribing via callbacks. Published and versioned on npm.</p>
+            <div class="proj-links">
+              <a href="https://www.npmjs.com/package/observer-hooks" target="_blank" rel="noopener">npm →</a>
+              <a href="https://github.com/Nirajsah17/Observable-hooks" target="_blank" rel="noopener">Source →</a>
+            </div>
+          </div>
+
+          <div class="proj-card">
+            <div class="proj-top"><span class="proj-name">gn-queue</span><span class="ext json">npm</span></div>
+            <p class="proj-desc">A Queue class for running concurrent tasks off the main thread — enqueueing, error handling, progress tracking and cancellation. Published on npm.</p>
+            <div class="proj-links">
+              <a href="https://www.npmjs.com/package/gn-queue" target="_blank" rel="noopener">npm →</a>
+              <a href="https://github.com/Nirajsah17/Queue" target="_blank" rel="noopener">Source →</a>
+            </div>
+          </div>
+
+          <div class="proj-card">
+            <div class="proj-top"><span class="proj-name">Pixel Studio</span><span class="ext tsx">tsx</span></div>
+            <p class="proj-desc">In-browser photo editor — zoom, pan, filters and core image-manipulation tooling built directly on the Canvas API.</p>
+            <div class="proj-links">
+              <a href="https://nirajsah17.github.io/pixel-studio/" target="_blank" rel="noopener">Live demo →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pane" id="education">
+      <div class="tab-bar"><span class="filedot"></span> education.md</div>
+      <div class="pane-body">
+        <div class="sec-head"><span class="sec-num">04</span><h2>Education</h2></div>
+        <div class="edu-row">
+          <div>
+            <p class="edu-degree">B.Tech, Computer Science &amp; Engineering</p>
+            <p class="edu-org">Aryabhatta Knowledge University (AKU), Patna</p>
+          </div>
+          <div class="edu-meta">Aug 2017 — Jun 2021<br>CGPA 7.98 / 10</div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="pane" id="contact">
+      <div class="pane-body">
+        <p class="eyebrow">// contact.json</p>
+        <h2>Let's talk.</h2>
+        <p>Open to Senior Frontend Engineer roles building React, Angular or Web Component–based platforms.</p>
+        <a class="cta-btn" href="mailto:nirajnsp5@gmail.com">Email nirajnsp5@gmail.com</a>
+      </div>
+    </footer>
+
+  </main>
+</div>
+
+<script>
+  const sections = ['profile','experience','skills','projects','education','contact'];
+  const treeLinks = document.querySelectorAll('#navTree a');
+  const mobileLinks = document.querySelectorAll('#mobileNav a');
+
+  function setActive(key){
+    treeLinks.forEach(a => a.classList.toggle('active', a.dataset.key === key));
+    mobileLinks.forEach(a => a.classList.toggle('active', a.dataset.key === key));
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        setActive(entry.target.id);
+      }
+    });
+  }, { rootMargin: '-40% 0px -50% 0px', threshold: 0 });
+
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if(el) observer.observe(el);
+  });
+</script>
+
+</body>
+</html>
